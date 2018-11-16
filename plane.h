@@ -80,7 +80,10 @@ public:
     Cell & operator()(int i, int j);
     int count(int i, int j);
     int sum(int i, int j);
+    int sumProduct(int i, int j, std::vector<std::vector<double>> v);
     bool evaluate(RuleHdl rule, Plane & lastGenPlane);
+    void getStats(double & mean, double & stdev, 
+                  double & max, double & min);
 public:
     int rows, cols;
     Neighborhood neighborhood;

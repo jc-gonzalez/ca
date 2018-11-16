@@ -10,7 +10,17 @@
 cmake_minimum_required(VERSION 2.8.2)
 cmake_policy (SET CMP0015 NEW)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
+set (MACOSX_CC clang)
+set (MACOSX_CXX clang++)
+set (MACOSX_CXX_FLAGS "-std=c++11 -stdlib=libc++")
+
+set (MACOSX_DEBUG "-g -gmodules -glldb")
+
+set (CMAKE_CC_COMPILER ${MACOSX_CXX})
+set (CMAKE_CC_FLAGS "${CMAKE_CC_FLAGS} ${MACOSX_DEBUG}")
+
+set (CMAKE_CXX_COMPILER ${MACOSX_CXX})
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MACOSX_DEBUG} ${MACOSX_CXX_FLAGS}")
 
 
 project (ca)

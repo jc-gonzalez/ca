@@ -78,9 +78,6 @@ public:
         : Rule(Moore, b) {}
 public:
     virtual void evaluate(Cell & c, Plane & plane);
-public:
-    Neighborhood neighborhood;
-    BoundaryType boundary;
 };
 
 //}

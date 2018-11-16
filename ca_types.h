@@ -78,6 +78,8 @@
 
 #include <gd.h>
 
+typedef unsigned char byte;
+
 // Declare lists of items
 
 #ifdef T

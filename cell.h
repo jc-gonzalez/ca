@@ -81,7 +81,7 @@ public:
     int i, j;
     Neighborhood neighborhood;
     BoundaryType boundary;
-    int state;
+    byte state;
 
 };
 

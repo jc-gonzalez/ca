@@ -75,19 +75,17 @@
 class CellularAutomaton {
 public:
     CellularAutomaton(int r, int c, RuleHdl rle,
-                      Neighborhood n = Moore, BoundaryType b = OpenBoundary)
-        : numOfRows(r), numOfColumns(c), rule(rle),
-          neighborhood(n), boundary(b), numOfGenerations(0)
-    {
-        plane = Plane(numOfRows, numOfColumns, neighborhood, boundary);
-        numOfGenerations = 0;
-    }
+                      Neighborhood n = Moore, BoundaryType b = OpenBoundary);
     void evolve(int ngen = 1, bool show = false);
     void place(int i, int j, std::vector<std::vector<int>> m);
+    void fillWith(byte * m);
     void dumpToFile(std::string outFileName);
     void dumpToAnimFile(std::string outFileName, int scale = 1);
+    void dumpToImageFile(std::string outFileName, int scale = 1);
     void clearHistory();
     void reset();
+    void getStats(double & mean, double & stdev, 
+                  double & max, double & min);
 protected:
     void dumpPlaneToStream(Plane & plane, int ng, std::ostream & o);
 private:

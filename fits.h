@@ -85,11 +85,24 @@ public:
     void dumpHeader();
     void close();
 
+    int getNumOfHDUs();
+    bool moveToHDU(int n);
+    bool moveToNextHDU();
+    bool moveToPrevHDU();
+    int getHDUType();
+    void getImageSize(int & dataType, std::vector<int> & axes);
+
+    void getImage(unsigned short * img);
+
 private:
     std::string fitsFileName;
     fitsfile * fptr;
     int status;
     int numOfKeys;
+
+    int numOfHDUs;
+    int currHDU;
+    int currHDUType;
 };
 
 //}

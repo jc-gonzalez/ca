@@ -127,6 +127,33 @@ int Plane::sum(int i, int j)
 }
 
 //----------------------------------------------------------------------
+// Method: sumProduct
+// Sum state values of cells in the neighborhood mult. by vector weights
+//----------------------------------------------------------------------
+int Plane::sumProduct(int i, int j, std::vector<std::vector<double>> v)
+{
+    int sm = 0;
+    switch (neighborhood) {
+    case Moore:
+        sm = ((cells[i-1][j-1].state * v[0][0]) +
+              (cells[i-1][j].state * v[0][1]) +
+              (cells[i-1][j+1].state * v[0][2]) +
+              (cells[i][j-1].state * v[1][0]) +
+              (cells[i][j].state * v[1][1]) +
+              (cells[i][j+1].state * v[1][2]) +
+              (cells[i+1][j-1].state * v[2][0]) +
+              (cells[i+1][j].state * v[2][1]) +
+              (cells[i+1][j+1].state * v[2][2]));
+        break;
+    default:
+        break;
+    }
+
+    return sm;
+}
+
+
+//----------------------------------------------------------------------
 // Method: operator()
 //----------------------------------------------------------------------
 Cell & Plane::operator()(int i, int j)
@@ -135,7 +162,7 @@ Cell & Plane::operator()(int i, int j)
 }
 
 //----------------------------------------------------------------------
-// Method: operator()
+// Method: evaluate
 //----------------------------------------------------------------------
 bool Plane::evaluate(RuleHdl rule, Plane & lastGenPlane)
 {
@@ -145,6 +172,34 @@ bool Plane::evaluate(RuleHdl rule, Plane & lastGenPlane)
         }
     }
     return true;
+}
+
+//----------------------------------------------------------------------
+// Method: getStats
+//----------------------------------------------------------------------
+void Plane::getStats(double & mean, double & stdev, 
+                     double & max, double & min)
+{
+    double sum = 0.;
+    double sum2 = 0.;
+    double n = (double)(rows * cols);
+    double mn = (double)(cells[0][0].state);
+    double mx = mn;
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            double c = (double)(cells[i][j].state);
+            sum += c;
+            sum2 += c * c;
+            if (c < mn) { mn = c; }
+            if (c > mx) { mx = c; }
+        }
+    }
+
+    mean = sum / n;
+    stdev = sqrt((sum2 / n) - (mean * mean));
+    max = mx;
+    min = mn;
 }
 
 //}
